@@ -1,0 +1,4520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Corretor+</title>
+
+<style>
+
+/* =========================================================
+   CONFIGURAÇÕES
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --bg:#07111f;
+    --card:#0d1b2e;
+    --card2:#10243b;
+    --border:#1d3856;
+
+    --text:#edf6ff;
+    --muted:#91a7bd;
+
+    --blue:#22b8ff;
+    --blue2:#0d8de0;
+
+    --green:#25d695;
+    --red:#ff5d70;
+    --yellow:#ffd166;
+    --purple:#a78bfa;
+
+}
+
+body{
+
+    font-family:Arial,Helvetica,sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            #10304d 0,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            #102743 0,
+            transparent 35%
+        ),
+        var(--bg);
+
+    color:var(--text);
+
+    min-height:100vh;
+
+}
+
+button,
+input,
+select,
+textarea{
+
+    font:inherit;
+
+}
+
+button{
+
+    cursor:pointer;
+
+    border:0;
+
+    border-radius:10px;
+
+    padding:11px 15px;
+
+    background:#17314c;
+
+    color:white;
+
+    font-weight:700;
+
+    transition:.2s;
+
+}
+
+button:hover{
+
+    transform:translateY(-1px);
+
+    filter:brightness(1.12);
+
+}
+
+.container{
+
+    width:min(1200px,94%);
+
+    margin:auto;
+
+}
+
+header{
+
+    padding:30px 0 20px;
+
+}
+
+.logo{
+
+    font-size:30px;
+
+    font-weight:800;
+
+    letter-spacing:-1px;
+
+}
+
+.logo span{
+
+    color:var(--blue);
+
+}
+
+.subtitle{
+
+    color:var(--muted);
+
+    margin-top:6px;
+
+}
+
+.card{
+
+    background:rgba(13,27,46,.94);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    padding:22px;
+
+    margin-bottom:18px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.18);
+
+}
+
+.card h2{
+
+    font-size:19px;
+
+    margin-bottom:16px;
+
+}
+
+.hidden{
+
+    display:none!important;
+
+}
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:14px;
+
+}
+
+.field{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:7px;
+
+}
+
+.field label{
+
+    color:var(--muted);
+
+    font-size:13px;
+
+}
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+    background:#081626;
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    padding:11px 12px;
+
+    outline:none;
+
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    border-color:var(--blue);
+
+}
+
+textarea{
+
+    resize:vertical;
+
+    min-height:130px;
+
+}
+
+.btns{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:9px;
+
+    margin-top:15px;
+
+}
+
+.primary{
+
+    background:linear-gradient(
+        135deg,
+        var(--blue),
+        var(--blue2)
+    );
+
+}
+
+.success{
+
+    background:#116b50;
+
+}
+
+.danger{
+
+    background:#742638;
+
+}
+
+.warning{
+
+    background:#72591a;
+
+}
+
+.purple{
+
+    background:#513a89;
+
+}
+
+.mode-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(5,1fr);
+
+    gap:12px;
+
+}
+
+.mode{
+
+    padding:17px 12px;
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    background:#0a192a;
+
+    cursor:pointer;
+
+    text-align:center;
+
+    transition:.2s;
+
+}
+
+.mode:hover{
+
+    border-color:var(--blue);
+
+}
+
+.mode.active{
+
+    border-color:var(--blue);
+
+    background:#0d2942;
+
+    box-shadow:0 0 0 1px var(--blue);
+
+}
+
+.mode .icon{
+
+    font-size:25px;
+
+    margin-bottom:7px;
+
+}
+
+.mode strong{
+
+    display:block;
+
+}
+
+.mode small{
+
+    color:var(--muted);
+
+    display:block;
+
+    margin-top:5px;
+
+}
+
+.day-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:12px;
+
+    margin-top:15px;
+
+}
+
+.day{
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    background:#091829;
+
+    padding:17px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.day:hover{
+
+    border-color:var(--blue);
+
+}
+
+.day.active{
+
+    border-color:var(--blue);
+
+    background:#0d2942;
+
+    box-shadow:0 0 0 1px var(--blue);
+
+}
+
+.day strong{
+
+    display:block;
+
+    margin-bottom:7px;
+
+}
+
+.day small{
+
+    color:var(--muted);
+
+    line-height:1.5;
+
+}
+
+.info{
+
+    margin-top:14px;
+
+    color:var(--muted);
+
+    font-size:13px;
+
+    line-height:1.5;
+
+}
+
+.area-list{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:12px;
+
+    margin-top:15px;
+
+}
+
+.area-option{
+
+    background:#091829;
+
+    border:1px solid var(--border);
+
+    border-radius:13px;
+
+    padding:15px;
+
+}
+
+.area-option strong{
+
+    display:block;
+
+    margin-bottom:5px;
+
+}
+
+.area-option span{
+
+    color:var(--muted);
+
+    font-size:13px;
+
+}
+
+.custom-area{
+
+    position:relative;
+
+    background:#091829;
+
+    border:1px solid var(--border);
+
+    border-radius:13px;
+
+    padding:15px;
+
+}
+
+.custom-area-remove{
+
+    position:absolute;
+
+    top:10px;
+
+    right:10px;
+
+    padding:6px 9px;
+
+    background:#742638;
+
+    font-size:12px;
+
+}
+
+.custom-area-fields{
+
+    display:grid;
+
+    grid-template-columns:1fr 120px;
+
+    gap:10px;
+
+    margin-top:10px;
+
+}
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(5,1fr);
+
+    gap:12px;
+
+}
+
+.stat{
+
+    background:#091829;
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    padding:18px;
+
+}
+
+.stat .label{
+
+    color:var(--muted);
+
+    font-size:13px;
+
+}
+
+.stat .value{
+
+    font-size:28px;
+
+    font-weight:800;
+
+    margin-top:5px;
+
+}
+
+.progress{
+
+    height:12px;
+
+    background:#071321;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    margin-top:14px;
+
+}
+
+.progress div{
+
+    height:100%;
+
+    width:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--blue),
+            var(--green)
+        );
+
+    transition:.5s;
+
+}
+
+.timer{
+
+    font-size:32px;
+
+    font-weight:800;
+
+    text-align:center;
+
+    margin:8px 0;
+
+    letter-spacing:2px;
+
+}
+
+.timer.warning{
+
+    color:var(--yellow);
+
+}
+
+.timer.dangerText{
+
+    color:var(--red);
+
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+th,
+td{
+
+    padding:10px 8px;
+
+    border-bottom:1px solid var(--border);
+
+    text-align:left;
+
+}
+
+th{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    text-transform:uppercase;
+
+}
+
+td{
+
+    font-size:14px;
+
+}
+
+.answer-input{
+
+    width:60px;
+
+    text-align:center;
+
+    text-transform:uppercase;
+
+    font-weight:bold;
+
+}
+
+.correct{
+
+    color:var(--green);
+
+    font-weight:800;
+
+}
+
+.wrong{
+
+    color:var(--red);
+
+    font-weight:800;
+
+}
+
+.null{
+
+    color:var(--yellow);
+
+    font-weight:800;
+
+}
+
+.area-result-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:12px;
+
+}
+
+.area-result{
+
+    border:1px solid var(--border);
+
+    background:#091829;
+
+    border-radius:14px;
+
+    padding:16px;
+
+}
+
+.area-result-title{
+
+    font-weight:800;
+
+}
+
+.area-result-score{
+
+    font-size:25px;
+
+    font-weight:800;
+
+    margin-top:6px;
+
+}
+
+.bar{
+
+    height:8px;
+
+    border-radius:20px;
+
+    background:#06111d;
+
+    overflow:hidden;
+
+    margin-top:10px;
+
+}
+
+.bar div{
+
+    height:100%;
+
+    width:0;
+
+    background:var(--blue);
+
+}
+
+.badge{
+
+    display:inline-block;
+
+    padding:4px 8px;
+
+    border-radius:20px;
+
+    font-size:11px;
+
+    font-weight:bold;
+
+    background:#17314c;
+
+}
+
+.empty{
+
+    padding:25px;
+
+    color:var(--muted);
+
+    text-align:center;
+
+}
+
+canvas{
+
+    width:100%;
+
+    max-height:350px;
+
+    background:#081626;
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+}
+
+@media(max-width:900px){
+
+    .grid,
+    .stats{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .mode-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .grid,
+    .stats,
+    .area-list,
+    .area-result-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .mode-grid,
+    .day-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .custom-area-fields{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .card{
+
+        padding:16px;
+
+    }
+
+}
+
+@media print{
+
+    body{
+
+        background:white;
+
+        color:black;
+
+    }
+
+    .no-print,
+    button{
+
+        display:none!important;
+
+    }
+
+    .card{
+
+        background:white;
+
+        color:black;
+
+        border:1px solid #ccc;
+
+        box-shadow:none;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<header>
+
+    <div class="logo">
+
+        Corretor<span>+</span>
+
+    </div>
+
+    <div class="subtitle">
+
+        Corretor e analisador de simulados
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MODELO
+===================================================== -->
+
+<section class="card no-print">
+
+<h2>🎯 Modelo do simulado</h2>
+
+
+<div class="mode-grid">
+
+
+<div class="mode active"
+     data-mode="personalizado">
+
+    <div class="icon">⚙️</div>
+
+    <strong>Personalizado</strong>
+
+    <small>
+        Configure seu próprio simulado
+    </small>
+
+</div>
+
+
+<div class="mode"
+     data-mode="enem">
+
+    <div class="icon">🟢</div>
+
+    <strong>ENEM</strong>
+
+    <small>
+        180 questões + redação
+    </small>
+
+</div>
+
+
+<div class="mode"
+     data-mode="ssa1">
+
+    <div class="icon">🔵</div>
+
+    <strong>SSA 1</strong>
+
+    <small>
+        90 questões
+    </small>
+
+</div>
+
+
+<div class="mode"
+     data-mode="ssa2">
+
+    <div class="icon">🟣</div>
+
+    <strong>SSA 2</strong>
+
+    <small>
+        90 questões
+    </small>
+
+</div>
+
+
+<div class="mode"
+     data-mode="ssa3">
+
+    <div class="icon">🔴</div>
+
+    <strong>SSA 3</strong>
+
+    <small>
+        95 questões + redação
+    </small>
+
+</div>
+
+
+</div>
+
+
+<div id="diaArea"
+     class="hidden">
+
+
+<h2 style="margin-top:22px">
+
+    📅 Dia da prova
+
+</h2>
+
+
+<div class="day-grid">
+
+
+<div class="day active"
+     data-day="completo">
+
+    <strong>
+        📚 Simulado completo
+    </strong>
+
+    <small>
+        Todos os dias da prova
+    </small>
+
+</div>
+
+
+<div class="day"
+     data-day="1">
+
+    <strong>
+        📝 Dia 1
+    </strong>
+
+    <small id="dia1Descricao">
+
+        Linguagens + Humanas
+
+    </small>
+
+</div>
+
+
+<div class="day"
+     data-day="2">
+
+    <strong>
+        🧮 Dia 2
+    </strong>
+
+    <small id="dia2Descricao">
+
+        Matemática + Natureza
+
+    </small>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<div id="modeloInfo"
+     class="info">
+
+    Modo personalizado:
+    escolha a quantidade e as áreas.
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     CONFIGURAÇÃO
+===================================================== -->
+
+<section class="card no-print">
+
+
+<h2>⚙️ Configuração</h2>
+
+
+<div class="grid">
+
+
+<div class="field">
+
+<label>
+    Quantidade de questões
+</label>
+
+<input
+    id="quantidade"
+    type="number"
+    min="1"
+    max="300"
+    value="20"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Tempo
+</label>
+
+<select id="tempoModo">
+
+    <option value="none">
+        Sem cronômetro
+    </option>
+
+    <option value="official">
+        Tempo real da prova
+    </option>
+
+    <option value="custom">
+        Personalizado
+    </option>
+
+</select>
+
+</div>
+
+
+<div class="field"
+     id="tempoCustomField">
+
+<label>
+    Minutos personalizados
+</label>
+
+<input
+    id="tempoCustom"
+    type="number"
+    min="1"
+    value="120"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Estimativa de nota
+</label>
+
+<select id="estimativa">
+
+    <option value="yes">
+        Ativada
+    </option>
+
+    <option value="no">
+        Desativada
+    </option>
+
+</select>
+
+</div>
+
+
+</div>
+
+
+
+<!-- PERSONALIZADO -->
+
+<div id="personalizadoConfig"
+     class="card"
+     style="margin-top:15px;margin-bottom:0">
+
+
+<h2>
+    📚 Áreas do simulado
+</h2>
+
+
+<div class="info">
+
+    Selecione as áreas e informe quantas
+    questões terá cada uma.
+
+</div>
+
+
+<div class="area-list">
+
+
+<label class="area-option">
+
+    <input
+        type="checkbox"
+        class="area-check"
+        value="Linguagens, Códigos e suas Tecnologias"
+        checked
+    >
+
+    <strong>
+        Linguagens, Códigos e suas Tecnologias
+    </strong>
+
+    <span>
+        Questões:
+    </span>
+
+    <input
+        type="number"
+        class="area-qtd"
+        data-area="Linguagens, Códigos e suas Tecnologias"
+        min="1"
+        value="5"
+    >
+
+</label>
+
+
+<label class="area-option">
+
+    <input
+        type="checkbox"
+        class="area-check"
+        value="Ciências Humanas e suas Tecnologias"
+        checked
+    >
+
+    <strong>
+        Ciências Humanas e suas Tecnologias
+    </strong>
+
+    <span>
+        Questões:
+    </span>
+
+    <input
+        type="number"
+        class="area-qtd"
+        data-area="Ciências Humanas e suas Tecnologias"
+        min="1"
+        value="5"
+    >
+
+</label>
+
+
+<label class="area-option">
+
+    <input
+        type="checkbox"
+        class="area-check"
+        value="Ciências Humanas e Sociais Aplicadas"
+    >
+
+    <strong>
+        Ciências Humanas e Sociais Aplicadas
+    </strong>
+
+    <span>
+        Questões:
+    </span>
+
+    <input
+        type="number"
+        class="area-qtd"
+        data-area="Ciências Humanas e Sociais Aplicadas"
+        min="1"
+        value="5"
+    >
+
+</label>
+
+
+<label class="area-option">
+
+    <input
+        type="checkbox"
+        class="area-check"
+        value="Ciências da Natureza e suas Tecnologias"
+        checked
+    >
+
+    <strong>
+        Ciências da Natureza e suas Tecnologias
+    </strong>
+
+    <span>
+        Questões:
+    </span>
+
+    <input
+        type="number"
+        class="area-qtd"
+        data-area="Ciências da Natureza e suas Tecnologias"
+        min="1"
+        value="5"
+    >
+
+</label>
+
+
+<label class="area-option">
+
+    <input
+        type="checkbox"
+        class="area-check"
+        value="Matemática e suas Tecnologias"
+        checked
+    >
+
+    <strong>
+        Matemática e suas Tecnologias
+    </strong>
+
+    <span>
+        Questões:
+    </span>
+
+    <input
+        type="number"
+        class="area-qtd"
+        data-area="Matemática e suas Tecnologias"
+        min="1"
+        value="5"
+    >
+
+</label>
+
+
+</div>
+
+
+<!-- NOVAS ÁREAS PERSONALIZADAS -->
+
+<div style="margin-top:18px">
+
+    <h2 style="font-size:16px;margin-bottom:8px">
+
+        ✨ Áreas personalizadas
+
+    </h2>
+
+    <div class="info" style="margin-top:0">
+
+        Crie uma área com o nome que quiser e defina
+        quantas questões ela terá.
+
+    </div>
+
+</div>
+
+
+<div
+    id="areasPersonalizadas"
+    class="area-list"
+></div>
+
+
+<div class="btns">
+
+    <button
+        type="button"
+        id="adicionarArea"
+        class="primary"
+    >
+
+        ➕ Criar área personalizada
+
+    </button>
+
+</div>
+
+
+</div>
+
+
+
+<div class="btns">
+
+
+<button
+    class="primary"
+    id="gerar"
+>
+    🚀 Criar simulado
+</button>
+
+
+<button id="salvarEstado">
+
+    💾 Salvar
+
+</button>
+
+
+<button
+    class="danger"
+    id="limpar"
+>
+
+    🧹 Limpar tudo
+
+</button>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     CRONÔMETRO
+===================================================== -->
+
+<section
+    id="timerCard"
+    class="card hidden no-print"
+>
+
+
+<h2>
+    ⏱️ Cronômetro
+</h2>
+
+
+<div
+    id="timer"
+    class="timer"
+>
+    00:00:00
+</div>
+
+
+<div
+    id="timerInfo"
+    class="info"
+    style="text-align:center"
+></div>
+
+
+<div
+    class="btns"
+    style="justify-content:center"
+>
+
+
+<button
+    class="primary"
+    id="iniciarTimer"
+>
+    ▶ Iniciar
+</button>
+
+
+<button id="pausarTimer">
+    ⏸ Pausar
+</button>
+
+
+<button
+    class="danger"
+    id="zerarTimer"
+>
+    ↻ Reiniciar
+</button>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     RESPOSTAS
+===================================================== -->
+
+<section class="card no-print">
+
+
+<h2>
+    ✏️ Minhas respostas
+</h2>
+
+
+<div class="info">
+
+    Digite A, B, C, D ou E.
+
+</div>
+
+
+<div id="questoes">
+
+    <div class="empty">
+        Crie um simulado para começar.
+    </div>
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     GABARITO
+===================================================== -->
+
+<section class="card no-print">
+
+
+<button
+    id="abrirGabarito"
+    class="primary"
+>
+
+    🔐 Abrir gabarito
+
+</button>
+
+
+<div
+    id="gabaritoArea"
+    class="hidden"
+    style="margin-top:18px"
+>
+
+
+<h2>
+    🔑 Gabarito
+</h2>
+
+
+<textarea
+    id="gabaritoColar"
+    placeholder="Cole o gabarito aqui.
+
+Exemplos:
+
+1-A
+2-C
+3-D
+4-N
+5-Nula
+
+ou:
+
+A C D N B E..."
+></textarea>
+
+
+<div class="btns">
+
+
+<button
+    class="primary"
+    id="preencherGabarito"
+>
+
+    ⚡ Preencher gabarito
+
+</button>
+
+
+<button id="limparGabarito">
+
+    🧹 Limpar gabarito
+
+</button>
+
+
+</div>
+
+
+<div
+    class="info"
+>
+
+    Aceita:
+    <strong>A, B, C, D, E, N ou NULA</strong>.
+
+</div>
+
+
+<div
+    id="tabelaGabarito"
+    style="margin-top:18px"
+></div>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     CORREÇÃO
+===================================================== -->
+
+<section class="card no-print">
+
+
+<div class="btns">
+
+
+<button
+    class="primary"
+    id="corrigir"
+>
+
+    📊 Corrigir simulado
+
+</button>
+
+
+<button id="mostrarErros">
+
+    ❌ Mostrar apenas erros
+
+</button>
+
+
+<button id="mostrarTodos">
+
+    📋 Mostrar todas
+
+</button>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     RESULTADO
+===================================================== -->
+
+<section
+    id="resultado"
+    class="hidden"
+>
+
+
+<div class="card">
+
+
+<h2>
+    📊 Resultado
+</h2>
+
+
+<div class="stats">
+
+
+<div class="stat">
+
+    <div class="label">
+        Acertos
+    </div>
+
+    <div
+        class="value"
+        id="acertos"
+    >
+        0
+    </div>
+
+</div>
+
+
+<div class="stat">
+
+    <div class="label">
+        Nulas
+    </div>
+
+    <div
+        class="value"
+        id="nulas"
+    >
+        0
+    </div>
+
+</div>
+
+
+<div class="stat">
+
+    <div class="label">
+        Acertos totais
+    </div>
+
+    <div
+        class="value"
+        id="acertosTotais"
+    >
+        0
+    </div>
+
+</div>
+
+
+<div class="stat">
+
+    <div class="label">
+        Erros
+    </div>
+
+    <div
+        class="value"
+        id="erros"
+    >
+        0
+    </div>
+
+</div>
+
+
+<div class="stat">
+
+    <div class="label">
+        Aproveitamento
+    </div>
+
+    <div
+        class="value"
+        id="porcentagem"
+    >
+        0%
+    </div>
+
+</div>
+
+
+</div>
+
+
+<div class="progress">
+
+    <div id="barra"></div>
+
+</div>
+
+
+<p
+    class="info"
+    id="resultadoModelo"
+></p>
+
+<p class="info" id="tempoConclusao"></p>
+
+
+</div>
+
+
+
+<!-- ESTIMATIVA -->
+
+<div class="card">
+
+
+<h2>
+    🧮 Estimativa de nota
+</h2>
+
+
+<div
+    id="estimativaResultado"
+    class="empty"
+>
+
+    Aguardando correção.
+
+</div>
+
+
+</div>
+
+
+
+<!-- ÁREAS -->
+
+<div class="card">
+
+
+<h2>
+    📚 Desempenho por área
+</h2>
+
+
+<div
+    id="areas"
+    class="area-result-grid"
+></div>
+
+
+</div>
+
+
+
+<!-- GRÁFICO -->
+
+<div class="card">
+
+
+<h2>
+    📈 Gráfico de desempenho
+</h2>
+
+
+<canvas
+    id="grafico"
+    width="1000"
+    height="400"
+></canvas>
+
+
+</div>
+
+
+
+<!-- TABELA -->
+
+<div class="card">
+
+
+<h2>
+    📋 Questões
+</h2>
+
+
+<div id="resultadoTabela"></div>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     DADOS
+===================================================== -->
+
+<section class="card no-print">
+
+
+<h2>
+    💾 Dados e relatório
+</h2>
+
+
+<div class="btns">
+
+
+<button
+    class="primary"
+    id="exportar"
+>
+
+    ⬇ Exportar resultado
+
+</button>
+
+
+<button id="importarBtn">
+
+    ⬆ Importar resultado
+
+</button>
+
+
+<button
+    class="purple"
+    id="relatorio"
+>
+
+    🖨️ Gerar relatório / PDF
+
+</button>
+
+
+<input
+    type="file"
+    id="importarArquivo"
+    accept=".json"
+    class="hidden"
+>
+
+
+</div>
+
+
+<div class="info">
+
+    O relatório utiliza a impressão do navegador.
+    Escolha <strong>Salvar como PDF</strong>.
+
+</div>
+
+
+</section>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   MODELOS OFICIAIS
+========================================================= */
+
+const MODELOS = {
+
+    personalizado:{
+        nome:"Simulado personalizado",
+        dias:1,
+        redacao:false
+    },
+
+
+    enem:{
+
+        nome:"ENEM",
+
+        dias:2,
+
+        redacao:true,
+
+        diasInfo:{
+
+            "1":{
+                tempo:330,
+                areas:{
+                    "Linguagens, Códigos e suas Tecnologias":45,
+                    "Ciências Humanas e suas Tecnologias":45
+                }
+            },
+
+            "2":{
+                tempo:300,
+                areas:{
+                    "Ciências da Natureza e suas Tecnologias":45,
+                    "Matemática e suas Tecnologias":45
+                }
+            }
+
+        }
+
+    },
+
+
+    ssa1:{
+
+        nome:"SSA 1",
+
+        dias:2,
+
+        redacao:false,
+
+        diasInfo:{
+
+            "1":{
+                tempo:240,
+                areas:{
+                    "Linguagens e suas Tecnologias":23,
+                    "Ciências Humanas e Sociais Aplicadas":22
+                }
+            },
+
+            "2":{
+                tempo:240,
+                areas:{
+                    "Matemática e suas Tecnologias":22,
+                    "Ciências da Natureza e suas Tecnologias":23
+                }
+            }
+
+        }
+
+    },
+
+
+    ssa2:{
+
+        nome:"SSA 2",
+
+        dias:2,
+
+        redacao:false,
+
+        diasInfo:{
+
+            "1":{
+                tempo:240,
+                areas:{
+                    "Linguagens e suas Tecnologias":23,
+                    "Ciências Humanas e Sociais Aplicadas":22
+                }
+            },
+
+            "2":{
+                tempo:240,
+                areas:{
+                    "Matemática e suas Tecnologias":22,
+                    "Ciências da Natureza e suas Tecnologias":23
+                }
+            }
+
+        }
+
+    },
+
+
+    ssa3:{
+
+        nome:"SSA 3",
+
+        dias:2,
+
+        redacao:true,
+
+        diasInfo:{
+
+            "1":{
+                tempo:270,
+                areas:{
+                    "Linguagens e suas Tecnologias":23,
+                    "Ciências Humanas e Sociais Aplicadas":22
+                }
+            },
+
+            "2":{
+                tempo:270,
+                areas:{
+                    "Matemática e suas Tecnologias":23,
+                    "Ciências da Natureza e suas Tecnologias":27
+                }
+            }
+
+        }
+
+    }
+
+};
+
+
+
+let modoAtual="personalizado";
+
+let diaAtual="completo";
+
+let questoes=[];
+
+let resultadoAtual=null;
+
+let mostrarSomenteErros=false;
+
+let timerInterval=null;
+
+let tempoRestante=0;
+
+let timerRodando=false;
+
+let inicioSimulado=null;
+
+let tempoConclusaoSegundos=null;
+
+
+
+const $=id=>document.getElementById(id);
+
+
+
+/* =========================================================
+   MODELO
+========================================================= */
+
+function modelo(){
+
+    return MODELOS[modoAtual];
+
+}
+
+
+function formatarDuracao(segundos){
+
+    if(segundos===null || segundos===undefined || !Number.isFinite(segundos))
+        return "Não registrado";
+
+    const total=Math.max(0,Math.floor(segundos));
+    const horas=Math.floor(total/3600);
+    const minutos=Math.floor((total%3600)/60);
+    const segundosRestantes=total%60;
+
+    return `${String(horas).padStart(2,"0")}:`+
+        `${String(minutos).padStart(2,"0")}:`+
+        `${String(segundosRestantes).padStart(2,"0")}`;
+
+}
+
+
+
+function atualizarModelo(){
+
+    const m=modelo();
+
+    const diaArea=$("diaArea");
+
+    if(modoAtual==="personalizado"){
+
+        diaArea.classList.add("hidden");
+
+        $("modeloInfo").innerHTML=
+            "Modo personalizado: escolha as áreas e a quantidade de questões.";
+
+        $("personalizadoConfig")
+            .classList.remove("hidden");
+
+        return;
+
+    }
+
+
+    $("personalizadoConfig")
+        .classList.add("hidden");
+
+    diaArea.classList.remove("hidden");
+
+
+    let texto=
+        `<strong>${m.nome}</strong>`;
+
+
+    if(diaAtual==="completo"){
+
+        let total=0;
+
+        Object.values(m.diasInfo)
+            .forEach(dia=>{
+
+                Object.values(dia.areas)
+                    .forEach(q=>total+=q);
+
+            });
+
+        texto+=
+            ` • ${total} questões • prova completa`;
+
+    }
+
+
+    else{
+
+        const info=m.diasInfo[diaAtual];
+
+        const total=
+            Object.values(info.areas)
+            .reduce((a,b)=>a+b,0);
+
+        const horas=Math.floor(info.tempo/60);
+
+        const minutos=info.tempo%60;
+
+        const tempoTexto=
+            minutos
+            ?`${horas}h ${minutos}min`
+            :`${horas}h`;
+
+        texto+=
+            ` • ${total} questões • ${tempoTexto}`;
+
+    }
+
+
+    if(m.redacao && diaAtual!=="2")
+        texto+=" • Redação";
+
+
+    $("modeloInfo").innerHTML=texto;
+
+
+    const d1=m.diasInfo["1"];
+
+    const d2=m.diasInfo["2"];
+
+
+    if(d1){
+
+        $("dia1Descricao").textContent=
+            Object.keys(d1.areas).join(" + ") +
+            (m.redacao ? " + Redação" : "");
+
+    }
+
+
+    if(d2){
+
+        $("dia2Descricao").textContent=
+            Object.keys(d2.areas).join(" + ");
+
+    }
+
+}
+
+
+
+/* =========================================================
+   SELEÇÃO DE MODELO
+========================================================= */
+
+document
+.querySelectorAll(".mode")
+.forEach(el=>{
+
+    el.addEventListener("click",()=>{
+
+        document
+        .querySelectorAll(".mode")
+        .forEach(x=>
+            x.classList.remove("active")
+        );
+
+        el.classList.add("active");
+
+        modoAtual=el.dataset.mode;
+
+        diaAtual=
+            modoAtual==="personalizado"
+            ?"completo"
+            :"completo";
+
+        document
+        .querySelectorAll(".day")
+        .forEach(x=>
+            x.classList.toggle(
+                "active",
+                x.dataset.day==="completo"
+            )
+        );
+
+        atualizarModelo();
+
+    });
+
+});
+
+
+
+/* =========================================================
+   SELEÇÃO DE DIA
+========================================================= */
+
+document
+.querySelectorAll(".day")
+.forEach(el=>{
+
+    el.addEventListener("click",()=>{
+
+        document
+        .querySelectorAll(".day")
+        .forEach(x=>
+            x.classList.remove("active")
+        );
+
+        el.classList.add("active");
+
+        diaAtual=el.dataset.day;
+
+        atualizarModelo();
+
+    });
+
+});
+
+
+
+/* =========================================================
+   ÁREAS PERSONALIZADAS
+========================================================= */
+
+let contadorAreasPersonalizadas=0;
+
+
+$("adicionarArea")
+.addEventListener("click",()=>{
+
+    contadorAreasPersonalizadas++;
+
+    const id=
+        "areaPersonalizada_"+
+        contadorAreasPersonalizadas;
+
+
+    const div=
+        document.createElement("div");
+
+    div.className="custom-area";
+
+    div.dataset.id=id;
+
+
+    div.innerHTML=`
+
+        <button
+            type="button"
+            class="custom-area-remove"
+        >
+            ✕ Remover
+        </button>
+
+        <strong>
+            Área personalizada
+        </strong>
+
+        <div class="custom-area-fields">
+
+            <div class="field">
+
+                <label>
+                    Nome da área
+                </label>
+
+                <input
+                    type="text"
+                    class="custom-area-name"
+                    placeholder="Ex.: Programação"
+                >
+
+            </div>
+
+            <div class="field">
+
+                <label>
+                    Questões
+                </label>
+
+                <input
+                    type="number"
+                    class="custom-area-qtd"
+                    min="1"
+                    value="5"
+                >
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    div
+    .querySelector(".custom-area-remove")
+    .addEventListener("click",()=>{
+
+        div.remove();
+
+    });
+
+
+    $("areasPersonalizadas")
+        .appendChild(div);
+
+});
+
+
+
+/* =========================================================
+   CONFIGURAÇÃO DE QUESTÕES
+========================================================= */
+
+function obterAreasPersonalizadas(){
+
+    const resultado=[];
+
+
+    document
+    .querySelectorAll(".area-check")
+    .forEach(check=>{
+
+        if(!check.checked)
+            return;
+
+        const area=check.value;
+
+        const input=document
+            .querySelector(
+                `.area-qtd[data-area="${area}"]`
+            );
+
+        const quantidade=
+            Number(input?.value||0);
+
+        if(quantidade>0){
+
+            resultado.push({
+                area,
+                quantidade
+            });
+
+        }
+
+    });
+
+
+    /* ÁREAS CRIADAS PELO USUÁRIO */
+
+    document
+    .querySelectorAll(".custom-area")
+    .forEach(bloco=>{
+
+        const nome=
+            bloco
+            .querySelector(".custom-area-name")
+            .value
+            .trim();
+
+        const quantidade=
+            Number(
+                bloco
+                .querySelector(".custom-area-qtd")
+                .value||0
+            );
+
+
+        if(nome && quantidade>0){
+
+            resultado.push({
+
+                area:nome,
+
+                quantidade
+
+            });
+
+        }
+
+    });
+
+
+    return resultado;
+
+}
+
+
+
+function configurarQuestoes(){
+
+    questoes=[];
+
+    let numero=1;
+
+
+    /* PERSONALIZADO */
+
+    if(modoAtual==="personalizado"){
+
+        const areas=
+            obterAreasPersonalizadas();
+
+        areas.forEach(item=>{
+
+            for(let i=0;i<item.quantidade;i++){
+
+                questoes.push({
+
+                    numero,
+
+                    area:item.area,
+
+                    resposta:"",
+
+                    gabarito:"",
+
+                    status:""
+
+                });
+
+                numero++;
+
+            }
+
+        });
+
+    }
+
+
+    /* MODELO */
+
+    else{
+
+        let areas={};
+
+
+        if(diaAtual==="completo"){
+
+            Object.values(modelo().diasInfo)
+            .forEach(dia=>{
+
+                Object.entries(dia.areas)
+                .forEach(([area,qtd])=>{
+
+                    areas[area]=qtd;
+
+                });
+
+            });
+
+        }
+
+        else{
+
+            areas=
+                modelo()
+                .diasInfo[diaAtual]
+                .areas;
+
+        }
+
+
+        Object.entries(areas)
+        .forEach(([area,qtd])=>{
+
+            for(let i=0;i<qtd;i++){
+
+                questoes.push({
+
+                    numero,
+
+                    area,
+
+                    resposta:"",
+
+                    gabarito:"",
+
+                    status:""
+
+                });
+
+                numero++;
+
+            }
+
+        });
+
+    }
+
+
+    $("quantidade").value=
+        questoes.length;
+
+    renderQuestoes();
+
+    renderGabarito();
+
+}
+
+
+
+/* =========================================================
+   QUESTÕES
+========================================================= */
+
+function renderQuestoes(){
+
+    if(!questoes.length){
+
+        $("questoes").innerHTML=
+            `<div class="empty">
+                Nenhuma área selecionada.
+            </div>`;
+
+        return;
+
+    }
+
+
+    let html=`
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>#</th>
+
+                <th>Área de conhecimento</th>
+
+                <th>Resposta</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+    `;
+
+
+    questoes.forEach(q=>{
+
+        html+=`
+
+        <tr>
+
+            <td>
+                ${q.numero}
+            </td>
+
+            <td>
+                <span class="badge">
+                    ${q.area}
+                </span>
+            </td>
+
+            <td>
+
+                <input
+                    class="answer-input"
+                    maxlength="1"
+                    data-q="${q.numero}"
+                    value="${q.resposta}"
+                    placeholder="—"
+                >
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+
+    html+=`
+
+        </tbody>
+
+    </table>
+
+    `;
+
+
+    $("questoes").innerHTML=html;
+
+
+    document
+    .querySelectorAll(".answer-input")
+    .forEach(input=>{
+
+        input.addEventListener("input",()=>{
+
+            input.value=
+                input.value
+                .toUpperCase()
+                .replace(/[^A-E]/g,"");
+
+            const q=
+                questoes.find(
+                    x=>x.numero==input.dataset.q
+                );
+
+            if(q)
+                q.resposta=input.value;
+
+        });
+
+    });
+
+}
+
+
+
+/* =========================================================
+   GABARITO
+========================================================= */
+
+$("abrirGabarito")
+.addEventListener("click",()=>{
+
+    const area=$("gabaritoArea");
+
+    area.classList.toggle("hidden");
+
+    $("abrirGabarito").textContent=
+        area.classList.contains("hidden")
+        ?"🔐 Abrir gabarito"
+        :"🔓 Fechar gabarito";
+
+});
+
+
+
+function normalizarResposta(valor){
+
+    if(!valor)
+        return "";
+
+    valor=
+        valor
+        .toUpperCase()
+        .trim();
+
+
+    if(
+        valor==="N" ||
+        valor==="NULA" ||
+        valor==="NUL" ||
+        valor==="ANULADA" ||
+        valor==="ANULADO"
+    ){
+
+        return "N";
+
+    }
+
+
+    if(/^[A-E]$/.test(valor))
+        return valor;
+
+
+    return "";
+
+}
+
+
+
+function renderGabarito(){
+
+    if(!questoes.length){
+
+        $("tabelaGabarito").innerHTML=
+            `<div class="empty">
+                Crie um simulado primeiro.
+            </div>`;
+
+        return;
+
+    }
+
+
+    let html=`
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>#</th>
+
+                <th>Gabarito</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+    `;
+
+
+    questoes.forEach(q=>{
+
+        html+=`
+
+        <tr>
+
+            <td>
+                ${q.numero}
+            </td>
+
+            <td>
+
+                <input
+                    class="answer-input resposta-gabarito"
+                    maxlength="5"
+                    data-g="${q.numero}"
+                    value="${q.gabarito}"
+                    placeholder="A-E/N"
+                >
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+
+    html+=`
+
+        </tbody>
+
+    </table>
+
+    `;
+
+
+    $("tabelaGabarito").innerHTML=html;
+
+
+    document
+    .querySelectorAll(".resposta-gabarito")
+    .forEach(input=>{
+
+        input.addEventListener("input",()=>{
+
+            const valor=
+                normalizarResposta(
+                    input.value
+                );
+
+            if(
+                input.value
+                .toUpperCase()
+                .includes("NULA")
+            ){
+
+                input.value="N";
+
+            }
+
+            else{
+
+                input.value=valor;
+
+            }
+
+
+            const q=
+                questoes.find(
+                    x=>x.numero==input.dataset.g
+                );
+
+            if(q)
+                q.gabarito=input.value;
+
+        });
+
+    });
+
+}
+
+
+
+/* =========================================================
+   INTERPRETAR GABARITO COLADO
+========================================================= */
+
+function interpretarGabarito(texto){
+
+    texto=texto.toUpperCase();
+
+
+    const respostas={};
+
+
+    /*
+        Aceita:
+
+        1-A
+        1. A
+        1) A
+        1: A
+        1 A
+        QUESTÃO 1 - A
+        QUESTAO 1 NULA
+        1 NULA
+        1-N
+    */
+
+
+    const regex=
+    /(?:QUEST(?:ÃO|AO)?\s*)?(\d{1,3})\s*(?:[-.):–—]\s*|\s+)(NULA|ANULADA|ANULADO|[A-E]|N)\b/g;
+
+
+    let match;
+
+
+    while(
+        (match=regex.exec(texto))!==null
+    ){
+
+        const numero=
+            Number(match[1]);
+
+        const resposta=
+            normalizarResposta(match[2]);
+
+
+        if(
+            numero>=1 &&
+            numero<=questoes.length &&
+            resposta
+        ){
+
+            respostas[numero]=resposta;
+
+        }
+
+    }
+
+
+    /*
+        FORMATO SIMPLES
+
+        A B C D N NULA E
+    */
+
+
+    if(
+        Object.keys(respostas).length===0
+    ){
+
+        const tokens=
+            texto
+            .replace(
+                /NULA|ANULADA|ANULADO/g,
+                " N "
+            )
+            .replace(
+                /[^A-EN\s]/g,
+                " "
+            )
+            .split(/\s+/)
+            .filter(
+                x=>/^[A-EN]$/.test(x)
+            );
+
+
+        tokens.forEach((r,i)=>{
+
+            if(i<questoes.length){
+
+                respostas[i+1]=r;
+
+            }
+
+        });
+
+    }
+
+
+    return respostas;
+
+}
+
+
+
+$("preencherGabarito")
+.addEventListener("click",()=>{
+
+    const texto=
+        $("gabaritoColar")
+        .value
+        .trim();
+
+
+    if(!texto){
+
+        alert(
+            "Cole um gabarito primeiro."
+        );
+
+        return;
+
+    }
+
+
+    const respostas=
+        interpretarGabarito(texto);
+
+
+    let quantidade=0;
+
+
+    questoes.forEach(q=>{
+
+        if(respostas[q.numero]){
+
+            q.gabarito=
+                respostas[q.numero];
+
+            quantidade++;
+
+        }
+
+    });
+
+
+    renderGabarito();
+
+
+    alert(
+        `${quantidade} resposta(s) identificada(s).`
+    );
+
+});
+
+
+
+$("limparGabarito")
+.addEventListener("click",()=>{
+
+    questoes.forEach(
+        q=>q.gabarito=""
+    );
+
+    $("gabaritoColar").value="";
+
+    renderGabarito();
+
+});
+
+
+
+/* =========================================================
+   CRONÔMETRO
+========================================================= */
+
+function obterTempoOficial(){
+
+    if(modoAtual==="personalizado")
+        return 0;
+
+
+    if(diaAtual==="completo"){
+
+        let total=0;
+
+        Object.values(modelo().diasInfo)
+        .forEach(dia=>{
+            total+=dia.tempo;
+        });
+
+        return total;
+
+    }
+
+
+    return modelo()
+        .diasInfo[diaAtual]
+        .tempo;
+
+}
+
+
+
+function definirTempo(){
+
+    const modo=
+        $("tempoModo").value;
+
+
+    if(modo==="none"){
+
+        $("timerCard")
+        .classList
+        .add("hidden");
+
+        pausarTimer();
+
+        return;
+
+    }
+
+
+    $("timerCard")
+    .classList
+    .remove("hidden");
+
+
+    if(modo==="custom"){
+
+        tempoRestante=
+            Number(
+                $("tempoCustom").value
+            )*60;
+
+    }
+
+
+    else{
+
+        tempoRestante=
+            obterTempoOficial()*60;
+
+    }
+
+
+    const minutos=
+        Math.floor(
+            tempoRestante/60
+        );
+
+
+    $("timerInfo").textContent=
+        `Tempo configurado: ${minutos} minutos`;
+
+    atualizarTimer();
+
+}
+
+
+
+function iniciarTimer(){
+
+    if(timerRodando)
+        return;
+
+    timerRodando=true;
+
+
+    timerInterval=
+        setInterval(()=>{
+
+            if(tempoRestante<=0){
+
+                clearInterval(
+                    timerInterval
+                );
+
+                timerRodando=false;
+
+                atualizarTimer();
+
+                alert(
+                    "⏰ Tempo encerrado!"
+                );
+
+                return;
+
+            }
+
+
+            tempoRestante--;
+
+            atualizarTimer();
+
+        },1000);
+
+}
+
+
+
+function pausarTimer(){
+
+    timerRodando=false;
+
+    clearInterval(
+        timerInterval
+    );
+
+}
+
+
+
+function atualizarTimer(){
+
+    const h=
+        Math.floor(
+            tempoRestante/3600
+        );
+
+    const m=
+        Math.floor(
+            (tempoRestante%3600)/60
+        );
+
+    const s=
+        tempoRestante%60;
+
+
+    $("timer").textContent=
+
+        `${String(h).padStart(2,"0")}:`+
+        `${String(m).padStart(2,"0")}:`+
+        `${String(s).padStart(2,"0")}`;
+
+
+    $("timer").classList.toggle(
+        "warning",
+        tempoRestante<=600 &&
+        tempoRestante>300
+    );
+
+
+    $("timer").classList.toggle(
+        "dangerText",
+        tempoRestante<=300
+    );
+
+}
+
+
+
+$("tempoModo")
+.addEventListener("change",()=>{
+
+    $("tempoCustomField").style.display=
+        $("tempoModo").value==="custom"
+        ?"flex"
+        :"none";
+
+});
+
+
+
+$("iniciarTimer")
+.addEventListener(
+    "click",
+    iniciarTimer
+);
+
+
+$("pausarTimer")
+.addEventListener(
+    "click",
+    pausarTimer
+);
+
+
+$("zerarTimer")
+.addEventListener(
+    "click",
+    ()=>{
+
+        pausarTimer();
+
+        definirTempo();
+
+    }
+);
+
+
+
+/* =========================================================
+   CRIAR SIMULADO
+========================================================= */
+
+$("gerar")
+.addEventListener("click",()=>{
+
+    configurarQuestoes();
+
+    definirTempo();
+
+    inicioSimulado=Date.now();
+
+    tempoConclusaoSegundos=null;
+
+    resultadoAtual=null;
+
+    $("resultado")
+        .classList
+        .add("hidden");
+
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+});
+
+
+
+/* =========================================================
+   CORREÇÃO
+========================================================= */
+
+function corrigir(){
+
+    if(!questoes.length){
+
+        alert(
+            "Crie um simulado primeiro."
+        );
+
+        return;
+
+    }
+
+
+    if(tempoConclusaoSegundos===null){
+
+        if(inicioSimulado!==null){
+
+            tempoConclusaoSegundos=Math.floor((Date.now()-inicioSimulado)/1000);
+
+        }
+
+        else if(resultadoAtual && resultadoAtual.tempoConclusaoSegundos!==undefined){
+
+            tempoConclusaoSegundos=resultadoAtual.tempoConclusaoSegundos;
+
+        }
+
+    }
+
+
+    let acertos=0;
+
+    let erros=0;
+
+    let nulas=0;
+
+
+    questoes.forEach(q=>{
+
+        const resposta=
+            normalizarResposta(
+                q.resposta
+            );
+
+        const gabarito=
+            normalizarResposta(
+                q.gabarito
+            );
+
+
+        q.resposta=resposta;
+
+        q.gabarito=gabarito;
+
+
+        if(gabarito==="N"){
+
+            q.status="nula";
+
+            nulas++;
+
+        }
+
+        else if(
+            resposta &&
+            gabarito &&
+            resposta===gabarito
+        ){
+
+            q.status="acerto";
+
+            acertos++;
+
+        }
+
+        else{
+
+            q.status="erro";
+
+            erros++;
+
+        }
+
+    });
+
+
+    /* ACERTOS TOTAIS = ACERTOS + NULAS */
+
+    const acertosTotais=
+        acertos+nulas;
+
+
+    resultadoAtual={
+
+        acertos,
+
+        erros,
+
+        nulas,
+
+        acertosTotais,
+
+        tempoConclusaoSegundos,
+
+        total:questoes.length
+
+    };
+
+
+    $("resultado")
+        .classList
+        .remove("hidden");
+
+
+    $("acertos").textContent=
+        acertos;
+
+
+    $("erros").textContent=
+        erros;
+
+
+    $("nulas").textContent=
+        nulas;
+
+
+    $("acertosTotais").textContent=
+        acertosTotais;
+
+
+    const percentual=
+        questoes.length
+        ?
+        (
+            acertosTotais
+            /
+            questoes.length
+            *
+            100
+        )
+        :
+        0;
+
+
+    $("porcentagem").textContent=
+        percentual.toFixed(1)+"%";
+
+
+    $("barra").style.width=
+        percentual+"%";
+
+
+    $("resultadoModelo").innerHTML=
+        `<strong>
+            ${modelo().nome}
+        </strong>
+        •
+        ${diaAtual==="completo"
+            ?"Prova completa"
+            :"Dia "+diaAtual}
+        •
+        ${questoes.length} questões
+        •
+        <strong>${acertosTotais} acertos totais</strong>`;
+
+    $("tempoConclusao").innerHTML=
+        `<strong>⏱️ Tempo para concluir:</strong> ${formatarDuracao(tempoConclusaoSegundos)}`;
+
+
+    gerarAreas();
+
+    gerarEstimativa();
+
+    gerarTabela();
+
+    desenharGrafico();
+
+
+    $("resultado")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+}
+
+
+
+$("corrigir")
+.addEventListener(
+    "click",
+    corrigir
+);
+
+
+
+/* =========================================================
+   ÁREAS
+========================================================= */
+
+function gerarAreas(){
+
+    const dados={};
+
+
+    questoes.forEach(q=>{
+
+        if(!dados[q.area]){
+
+            dados[q.area]={
+
+                total:0,
+
+                acertos:0,
+
+                nulas:0
+
+            };
+
+        }
+
+
+        dados[q.area].total++;
+
+
+        if(q.status==="acerto")
+            dados[q.area].acertos++;
+
+
+        if(q.status==="nula")
+            dados[q.area].nulas++;
+
+    });
+
+
+    let html="";
+
+
+    Object.entries(dados)
+    .forEach(([area,d])=>{
+
+        /* ACERTOS TOTAIS DA ÁREA */
+
+        const acertosTotais=
+            d.acertos+d.nulas;
+
+
+        const pct=
+            (
+                acertosTotais
+                /
+                d.total
+                *
+                100
+            ).toFixed(1);
+
+
+        html+=`
+
+        <div class="area-result">
+
+            <div class="area-result-title">
+
+                ${area}
+
+            </div>
+
+
+            <div class="area-result-score">
+
+                ${acertosTotais}/${d.total}
+
+            </div>
+
+
+            <div class="info">
+
+                ${d.acertos} acertos
+                • ${d.nulas} nulas
+                • ${acertosTotais} acertos totais
+
+            </div>
+
+
+            <div class="info">
+
+                ${pct}% de aproveitamento
+
+            </div>
+
+
+            <div class="bar">
+
+                <div
+                    style="width:${pct}%"
+                ></div>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+
+    $("areas").innerHTML=html;
+
+}
+
+
+
+/* =========================================================
+   ESTIMATIVA
+========================================================= */
+
+function gerarEstimativa(){
+
+    if(
+        $("estimativa").value==="no"
+    ){
+
+        $("estimativaResultado")
+        .innerHTML=
+            `<div class="empty">
+                Estimativa desativada.
+            </div>`;
+
+        return;
+
+    }
+
+
+    const areas={};
+
+
+    questoes.forEach(q=>{
+
+        if(!areas[q.area]){
+
+            areas[q.area]={
+
+                acertos:0,
+
+                nulas:0,
+
+                acertosTotais:0,
+
+                total:0
+
+            };
+
+        }
+
+
+        areas[q.area].total++;
+
+
+        if(q.status==="acerto")
+            areas[q.area].acertos++;
+
+
+        if(q.status==="nula")
+            areas[q.area].nulas++;
+
+    });
+
+
+    /* CALCULA ACERTOS TOTAIS POR ÁREA */
+
+    Object.values(areas)
+    .forEach(d=>{
+
+        d.acertosTotais=
+            d.acertos+d.nulas;
+
+    });
+
+
+    let html="";
+
+
+    if(modoAtual==="enem"){
+
+        html+=`
+
+        <p class="info">
+
+            ⚠️ A nota do ENEM utiliza TRI.
+            Esta é apenas uma estimativa de desempenho
+            e não reproduz a nota oficial.
+
+            O cálculo abaixo considera os
+            <strong>acertos totais</strong>,
+            incluindo questões nulas.
+
+        </p>
+
+        `;
+
+
+        Object.entries(areas)
+        .forEach(([area,d])=>{
+
+            const nota=
+                Math.round(
+                    300+
+                    (
+                        d.acertosTotais/
+                        d.total
+                    )*400
+                );
+
+
+            html+=`
+
+            <p style="margin:10px 0">
+
+                <strong>
+                    ${area}:
+                </strong>
+
+                ${nota} pontos
+
+                <span class="info">
+
+                    (${d.acertosTotais}/${d.total}
+                    acertos totais)
+
+                </span>
+
+            </p>
+
+            `;
+
+        });
+
+
+        const notas=
+            Object.values(areas)
+            .map(d=>
+                300+
+                (
+                    d.acertosTotais/
+                    d.total
+                )*400
+            );
+
+
+        const media=
+            notas.length
+            ?
+            Math.round(
+                notas.reduce(
+                    (a,b)=>a+b,
+                    0
+                )/notas.length
+            )
+            :
+            0;
+
+
+        html+=`
+
+        <hr
+            style="
+                margin:15px 0;
+                border-color:#1d3856
+            "
+        >
+
+        <strong>
+
+            Média estimada:
+            ${media}
+
+        </strong>
+
+        <p class="info">
+
+            Base:
+            ${resultadoAtual.acertosTotais}
+            acertos totais de
+            ${resultadoAtual.total}
+            questões.
+
+        </p>
+
+        `;
+
+    }
+
+
+    else{
+
+        const pct=
+            (
+                resultadoAtual.acertosTotais/
+                resultadoAtual.total
+                *
+                100
+            ).toFixed(1);
+
+
+        html+=`
+
+        <p>
+
+            <strong>
+                Aproveitamento:
+            </strong>
+
+            ${pct}%
+
+        </p>
+
+        <p>
+
+            <strong>
+                Acertos totais:
+            </strong>
+
+            ${resultadoAtual.acertosTotais}
+            /
+            ${resultadoAtual.total}
+
+        </p>
+
+        <p class="info">
+
+            ${modelo().nome}
+            ${
+                diaAtual==="completo"
+                ?" — prova completa"
+                :" — Dia "+diaAtual
+            }
+
+        </p>
+
+        `;
+
+    }
+
+
+    $("estimativaResultado")
+        .innerHTML=html;
+
+}
+
+
+
+/* =========================================================
+   TABELA
+========================================================= */
+
+function gerarTabela(){
+
+    const lista=
+        mostrarSomenteErros
+        ?
+        questoes.filter(
+            q=>q.status==="erro"
+        )
+        :
+        questoes;
+
+
+    if(!lista.length){
+
+        $("resultadoTabela")
+        .innerHTML=
+            `<div class="empty">
+                Nenhuma questão para mostrar.
+            </div>`;
+
+        return;
+
+    }
+
+
+    let html=`
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>#</th>
+
+                <th>Área</th>
+
+                <th>Marcada</th>
+
+                <th>Gabarito</th>
+
+                <th>Status</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+    `;
+
+
+    lista.forEach(q=>{
+
+        let classe="wrong";
+
+        let texto="✕ ERRO";
+
+
+        if(q.status==="acerto"){
+
+            classe="correct";
+
+            texto="✓ ACERTO";
+
+        }
+
+
+        if(q.status==="nula"){
+
+            classe="null";
+
+            texto="≡ NULA";
+
+        }
+
+
+        html+=`
+
+        <tr>
+
+            <td>
+                ${q.numero}
+            </td>
+
+            <td>
+                ${q.area}
+            </td>
+
+            <td>
+                ${q.resposta||"—"}
+            </td>
+
+            <td>
+                ${q.gabarito||"—"}
+            </td>
+
+            <td class="${classe}">
+
+                ${texto}
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+
+    html+=`
+
+        </tbody>
+
+    </table>
+
+    `;
+
+
+    $("resultadoTabela")
+        .innerHTML=html;
+
+}
+
+
+
+$("mostrarErros")
+.addEventListener("click",()=>{
+
+    mostrarSomenteErros=true;
+
+    gerarTabela();
+
+});
+
+
+$("mostrarTodos")
+.addEventListener("click",()=>{
+
+    mostrarSomenteErros=false;
+
+    gerarTabela();
+
+});
+
+
+
+/* =========================================================
+   GRÁFICO
+========================================================= */
+
+function desenharGrafico(){
+
+    const canvas=$("grafico");
+
+    const ctx=
+        canvas.getContext("2d");
+
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    const dados={};
+
+
+    questoes.forEach(q=>{
+
+        if(!dados[q.area]){
+
+            dados[q.area]={
+
+                acertos:0,
+
+                nulas:0,
+
+                total:0
+
+            };
+
+        }
+
+
+        dados[q.area].total++;
+
+
+        if(q.status==="acerto")
+            dados[q.area].acertos++;
+
+
+        if(q.status==="nula")
+            dados[q.area].nulas++;
+
+    });
+
+
+    /*
+        O GRÁFICO AGORA USA:
+
+        ACERTOS + NULAS
+        ----------------
+             TOTAL
+    */
+
+
+    const lista=
+        Object.entries(dados)
+        .map(([nome,d])=>({
+
+            nome,
+
+            acertosTotais:
+                d.acertos+d.nulas,
+
+            pct:
+                (
+                    (d.acertos+d.nulas)/
+                    d.total*
+                    100
+                )
+
+        }));
+
+
+    const margem=60;
+
+
+    const largura=
+        (
+            canvas.width-
+            margem*2
+        )
+        /
+        Math.max(
+            lista.length,
+            1
+        );
+
+
+    lista.forEach((d,i)=>{
+
+        const altura=
+            d.pct/
+            100*
+            270;
+
+
+        const x=
+            margem+
+            i*largura+
+            10;
+
+
+        const y=
+            330-altura;
+
+
+        ctx.fillStyle=
+            "#22b8ff";
+
+
+        ctx.fillRect(
+
+            x,
+
+            y,
+
+            Math.max(
+                largura-20,
+                10
+            ),
+
+            altura
+
+        );
+
+
+        ctx.fillStyle=
+            "#edf6ff";
+
+
+        ctx.font=
+            "14px Arial";
+
+
+        ctx.textAlign=
+            "center";
+
+
+        ctx.fillText(
+
+            d.pct.toFixed(0)+"%",
+
+            x+
+            Math.max(
+                largura-20,
+                10
+            )/2,
+
+            y-8
+
+        );
+
+
+        ctx.save();
+
+
+        ctx.translate(
+
+            x+
+            Math.max(
+                largura-20,
+                10
+            )/2,
+
+            350
+
+        );
+
+
+        ctx.rotate(
+            -Math.PI/4
+        );
+
+
+        ctx.textAlign=
+            "right";
+
+
+        ctx.fillText(
+
+            d.nome.substring(
+                0,
+                25
+            ),
+
+            0,
+
+            0
+
+        );
+
+
+        ctx.restore();
+
+    });
+
+}
+
+
+
+/* =========================================================
+   EXPORTAR
+========================================================= */
+
+$("exportar")
+.addEventListener("click",()=>{
+
+    const dados={
+
+        versao:2,
+
+        data:
+            new Date()
+            .toISOString(),
+
+        modo:
+            modoAtual,
+
+        dia:
+            diaAtual,
+
+        tempoRestante,
+
+        questoes,
+
+        resultado:
+            resultadoAtual
+
+    };
+
+
+    const blob=
+        new Blob(
+
+            [
+                JSON.stringify(
+                    dados,
+                    null,
+                    2
+                )
+            ],
+
+            {
+                type:
+                    "application/json"
+            }
+
+        );
+
+
+    const url=
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const a=
+        document.createElement(
+            "a"
+        );
+
+
+    a.href=url;
+
+
+    a.download=
+        `corretor-plus-${Date.now()}.json`;
+
+
+    a.click();
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+});
+
+
+
+/* =========================================================
+   IMPORTAR
+========================================================= */
+
+$("importarBtn")
+.addEventListener("click",()=>{
+
+    $("importarArquivo")
+    .click();
+
+});
+
+
+$("importarArquivo")
+.addEventListener(
+    "change",
+    event=>{
+
+        const arquivo=
+            event.target.files[0];
+
+
+        if(!arquivo)
+            return;
+
+
+        const reader=
+            new FileReader();
+
+
+        reader.onload=e=>{
+
+            try{
+
+                const dados=
+                    JSON.parse(
+                        e.target.result
+                    );
+
+
+                modoAtual=
+                    dados.modo||
+                    "personalizado";
+
+
+                diaAtual=
+                    dados.dia||
+                    "completo";
+
+
+                questoes=
+                    dados.questoes||
+                    [];
+
+
+                resultadoAtual=
+                    dados.resultado||
+                    null;
+
+
+                $("quantidade").value=
+                    questoes.length;
+
+
+                document
+                .querySelectorAll(".mode")
+                .forEach(x=>{
+
+                    x.classList.toggle(
+
+                        "active",
+
+                        x.dataset.mode===
+                        modoAtual
+
+                    );
+
+                });
+
+
+                document
+                .querySelectorAll(".day")
+                .forEach(x=>{
+
+                    x.classList.toggle(
+
+                        "active",
+
+                        x.dataset.day===
+                        diaAtual
+
+                    );
+
+                });
+
+
+                atualizarModelo();
+
+
+                renderQuestoes();
+
+                renderGabarito();
+
+
+                if(resultadoAtual){
+
+                    corrigir();
+
+                }
+
+
+                alert(
+                    "Resultado importado com sucesso!"
+                );
+
+
+            }
+
+            catch{
+
+                alert(
+                    "Não foi possível importar esse arquivo."
+                );
+
+            }
+
+        };
+
+
+        reader.readAsText(
+            arquivo
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   SALVAR LOCALMENTE
+========================================================= */
+
+$("salvarEstado")
+.addEventListener("click",()=>{
+
+    const dados={
+
+        modo:modoAtual,
+
+        dia:diaAtual,
+
+        questoes,
+
+        resultado:
+            resultadoAtual
+
+    };
+
+
+    localStorage.setItem(
+
+        "corretorPlusEstado",
+
+        JSON.stringify(dados)
+
+    );
+
+
+    alert(
+        "Simulado salvo neste navegador!"
+    );
+
+});
+
+
+
+/* =========================================================
+   RELATÓRIO
+========================================================= */
+
+$("relatorio")
+.addEventListener("click",()=>{
+
+    if(!resultadoAtual){
+
+        alert(
+            "Corrija o simulado antes de gerar o relatório."
+        );
+
+        return;
+
+    }
+
+
+    window.print();
+
+});
+
+
+
+/* =========================================================
+   LIMPAR
+========================================================= */
+
+$("limpar")
+.addEventListener("click",()=>{
+
+    if(
+        !confirm(
+            "Tem certeza que deseja apagar tudo?"
+        )
+    )
+        return;
+
+
+    questoes=[];
+
+    resultadoAtual=null;
+
+    inicioSimulado=null;
+
+    tempoConclusaoSegundos=null;
+
+    $("tempoConclusao").textContent="";
+
+    $("gabaritoColar").value="";
+
+    $("questoes").innerHTML=
+        `<div class="empty">
+            Crie um simulado para começar.
+        </div>`;
+
+    $("tabelaGabarito").innerHTML="";
+
+    $("resultado")
+        .classList
+        .add("hidden");
+
+
+    pausarTimer();
+
+    tempoRestante=0;
+
+    atualizarTimer();
+
+});
+
+
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+$("tempoCustomField")
+.style
+.display="none";
+
+
+atualizarModelo();
+
+</script>
+
+
+</body>
+
+</html>
